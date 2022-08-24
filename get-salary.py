@@ -18,7 +18,7 @@ POPULAR_LANGUAGES = [
 ]
 
 
-def predict_rub_salary(salary_from, salary_to, currency):
+def predict_rub_salary(salary_from, salary_to):
     if not salary_from and not salary_to:
         return
     elif salary_from and salary_to:
