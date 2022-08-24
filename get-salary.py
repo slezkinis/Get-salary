@@ -77,8 +77,7 @@ def predict_rub_salary_hh():
                 if vacancy_period_salary['currency'] == 'RUR':
                     vacancy_salary = predict_rub_salary(
                         vacancy_period_salary['from'],
-                        vacancy_period_salary['to'],
-                        vacancy_period_salary['currency']
+                        vacancy_period_salary['to']
                         )
                     if vacancy_salary:
                         vacancies_salaries.append(vacancy_salary)
@@ -125,8 +124,7 @@ def predict_rub_salary_sj(sj_token):
                 if about_vacancy['currency'] == 'rub':
                     vacancy_salary = predict_rub_salary(
                         about_vacancy['payment_from'],
-                        about_vacancy['payment_to'],
-                        about_vacancy['currency']
+                        about_vacancy['payment_to']
                     )
                 if vacancy_salary:
                     vacancies_salaries.append(vacancy_salary)
