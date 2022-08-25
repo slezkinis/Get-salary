@@ -73,14 +73,16 @@ def predict_rub_salary_hh():
         processed_vacancies = 0
         for vacancy in vacancies:
             vacancy_period_salary = vacancy['salary']
-            if vacancy_period_salary:
-                if vacancy_period_salary['currency'] == 'RUR':
-                    vacancy_salary = predict_rub_salary(
-                        vacancy_period_salary['from'],
-                        vacancy_period_salary['to']
-                        )
-                    if vacancy_salary:
-                        vacancies_salaries.append(vacancy_salary)
+            if not vacancy_period_salary:
+                continue
+            if vacancy_period_salary['currency'] != 'RUR':
+                continue
+            vacancy_salary = predict_rub_salary(
+                vacancy_period_salary['from'],
+                vacancy_period_salary['to']
+                )
+            if vacancy_salary:
+                vacancies_salaries.append(vacancy_salary)
         salaries_amount = 0
         for salary in vacancies_salaries:
             salaries_amount += salary
