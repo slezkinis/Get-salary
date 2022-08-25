@@ -66,8 +66,9 @@ def predict_rub_salary_hh():
         }
         response = requests.get('https://api.hh.ru/vacancies/', params=payload)
         response.raise_for_status()
-        vacancies = response.json()['items']
-        vacancies_amount = response.json()['found']
+        decoded_json = response.json()
+        vacancies = decoded_json['items']
+        vacancies_amount = decoded_json['found']
         vacancies_salaries = []
         vacancies_processed = 0
         for vacancy in vacancies:
