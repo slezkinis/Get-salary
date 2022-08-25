@@ -52,8 +52,7 @@ def print_table(about_vacancies, title):
         table_content.append(about_language)
     table_instance = DoubleTable(table_content, title)
     table_instance.justify_columns[2] = 'right'
-    print(table_instance.table)
-    print()
+    return table_instance.table
 
 
 def predict_rub_salary_hh():
@@ -147,5 +146,6 @@ def predict_rub_salary_sj(sj_token):
 if __name__ == '__main__':
     load_dotenv()
     sj_token = os.environ['SJ_TOKEN']
-    print_table(predict_rub_salary_hh(), 'HeadHunter Moscow')
-    print_table(predict_rub_salary_sj(sj_token), 'SuperJob Moscow')
+    print(print_table(predict_rub_salary_hh(), 'HeadHunter Moscow'))
+    print()
+    print(print_table(predict_rub_salary_sj(sj_token), 'SuperJob Moscow'))
