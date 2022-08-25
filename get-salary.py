@@ -83,9 +83,7 @@ def predict_rub_salary_hh():
                 )
             if vacancy_salary:
                 vacancies_salaries.append(vacancy_salary)
-        salaries_amount = 0
-        for salary in vacancies_salaries:
-            salaries_amount += salary
+        salaries_amount = sum(vacancies_salaries)
         processed_vacancies = len(vacancies_salaries)
         average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancies_amount
@@ -134,9 +132,7 @@ def predict_rub_salary_sj(sj_token):
             page_number += 1
             vacancy_amount += page['total']
             more_pages = page['more']
-        salaries_amount = 0
-        for salary in vacancies_salaries:
-            salaries_amount += salary
+        salaries_amount = sum(vacancies_salaries)
         processed_vacancies = len(vacancies_salaries)
         average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancy_amount
