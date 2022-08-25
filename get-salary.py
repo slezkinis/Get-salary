@@ -70,7 +70,7 @@ def predict_rub_salary_hh():
         vacancies = decoded_json['items']
         vacancies_amount = decoded_json['found']
         vacancies_salaries = []
-        vacancies_processed = 0
+        processed_vacancies = 0
         for vacancy in vacancies:
             vacancy_period_salary = vacancy['salary']
             if vacancy_period_salary:
@@ -84,10 +84,10 @@ def predict_rub_salary_hh():
         salaries_amount = 0
         for salary in vacancies_salaries:
             salaries_amount += salary
-        vacancies_processed = len(vacancies_salaries)
-        average_salary = salaries_amount / vacancies_processed
+        processed_vacancies = len(vacancies_salaries)
+        average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancies_amount
-        about_vacancy['vacancies_processed'] = vacancies_processed
+        about_vacancy['vacancies_processed'] = processed_vacancies
         about_vacancy['average_salary'] = int(average_salary)
         programming_jobs_hh[language] = about_vacancy
     return programming_jobs_hh
@@ -97,9 +97,9 @@ def predict_rub_salary_sj(sj_token):
     programming_jobs_sj = {}
     for language in POPULAR_LANGUAGES:
         vacancies_salaries = []
-        vacancies_processed = 0
+        processed_vacancies = 0
         about_vacancy = {}
-        number_page = 0
+        page_number = 0
         vacancy_amount = 0
         more_pages = True
         while more_pages:
@@ -109,7 +109,7 @@ def predict_rub_salary_sj(sj_token):
             payload = {
                 'town': 4,
                 'catalogues': 48,
-                'page': number_page,
+                'page': page_number,
                 'count': 100,
                 'keyword': language
             }
@@ -128,17 +128,17 @@ def predict_rub_salary_sj(sj_token):
                     )
                 if vacancy_salary:
                     vacancies_salaries.append(vacancy_salary)
-                    vacancies_processed += 1
-            number_page += 1
+                    processed_vacancies += 1
+            page_number += 1
             vacancy_amount += page['total']
             more_pages = page['more']
         salaries_amount = 0
         for salary in vacancies_salaries:
             salaries_amount += salary
-        vacancies_processed = len(vacancies_salaries)
-        average_salary = salaries_amount / vacancies_processed
+        processed_vacancies = len(vacancies_salaries)
+        average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancy_amount
-        about_vacancy['vacancies_processed'] = vacancies_processed
+        about_vacancy['vacancies_processed'] = processed_vacancies
         about_vacancy['average_salary'] = int(average_salary)
         programming_jobs_sj[language] = about_vacancy
     return programming_jobs_sj
