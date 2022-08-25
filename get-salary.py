@@ -57,12 +57,14 @@ def print_table(about_vacancies, title):
 
 def predict_rub_salary_hh():
     programming_jobs_hh = {}
+    area_id = 1
+    days_period = 30
     for language in POPULAR_LANGUAGES:
         about_vacancy = {}
         payload = {
             'text': f'Программист {language}',
-            'area': 1,
-            'period': 30
+            'area': area_id,
+            'period': days_period
         }
         response = requests.get('https://api.hh.ru/vacancies/', params=payload)
         response.raise_for_status()
@@ -85,7 +87,8 @@ def predict_rub_salary_hh():
                 vacancies_salaries.append(vacancy_salary)
         salaries_amount = sum(vacancies_salaries)
         processed_vacancies = len(vacancies_salaries)
-        average_salary = salaries_amount / processed_vacancies
+        if processed_vacancies != 0:    
+            average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancies_amount
         about_vacancy['vacancies_processed'] = processed_vacancies
         about_vacancy['average_salary'] = int(average_salary)
@@ -102,15 +105,18 @@ def predict_rub_salary_sj(sj_token):
         page_number = 0
         vacancy_amount = 0
         more_pages = True
+        town_id = 4
+        professions_catalog = 48
+        vacancies_number = 100
         while more_pages:
             headers = {
                 'X-Api-App-Id': sj_token
             }
             payload = {
-                'town': 4,
-                'catalogues': 48,
+                'town': town_id,
+                'catalogues': professions_catalog,
                 'page': page_number,
-                'count': 100,
+                'count': vacancies_number,
                 'keyword': language
             }
             response = requests.get(
@@ -134,7 +140,8 @@ def predict_rub_salary_sj(sj_token):
             more_pages = page['more']
         salaries_amount = sum(vacancies_salaries)
         processed_vacancies = len(vacancies_salaries)
-        average_salary = salaries_amount / processed_vacancies
+        if processed_vacancies != 0:
+            average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancy_amount
         about_vacancy['vacancies_processed'] = processed_vacancies
         about_vacancy['average_salary'] = int(average_salary)
