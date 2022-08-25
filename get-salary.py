@@ -32,9 +32,9 @@ def predict_rub_salary(salary_from, salary_to):
         return сalculated_salary
 
 
-def print_table(vacancies_data, title):
-    languages = [language for language in vacancies_data]
-    table_data = [
+def print_table(about_vacancies, title):
+    languages = [language for language in about_vacancies]
+    table_content = [
         [
             'Язык программирования',
             'Вакансий найдено',
@@ -45,12 +45,12 @@ def print_table(vacancies_data, title):
     for language in languages:
         about_language = [
             language,
-            vacancies_data[language]['vacancy_amount'],
-            vacancies_data[language]['vacancies_processed'],
-            vacancies_data[language]['average_salary']
+            about_vacancies[language]['vacancy_amount'],
+            about_vacancies[language]['vacancies_processed'],
+            about_vacancies[language]['average_salary']
         ]
-        table_data.append(about_language)
-    table_instance = DoubleTable(table_data, title)
+        table_content.append(about_language)
+    table_instance = DoubleTable(table_content, title)
     table_instance.justify_columns[2] = 'right'
     print(table_instance.table)
     print()
