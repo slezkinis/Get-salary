@@ -87,7 +87,7 @@ def predict_rub_salary_hh():
                 vacancies_salaries.append(vacancy_salary)
         salaries_amount = sum(vacancies_salaries)
         processed_vacancies = len(vacancies_salaries)
-        if processed_vacancies != 0:    
+        if processed_vacancies != 0:
             average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancies_amount
         about_vacancy['vacancies_processed'] = processed_vacancies
