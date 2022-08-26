@@ -32,7 +32,7 @@ def predict_rub_salary(salary_from, salary_to):
         return сalculated_salary
 
 
-def print_table(about_vacancies, title):
+def get_table(about_vacancies, title):
     languages = [language for language in about_vacancies]
     table_content = [
         [
@@ -68,9 +68,9 @@ def predict_rub_salary_hh():
         }
         response = requests.get('https://api.hh.ru/vacancies/', params=payload)
         response.raise_for_status()
-        decoded_json = response.json()
-        vacancies = decoded_json['items']
-        vacancies_amount = decoded_json['found']
+        page = response.json()
+        vacancies = page['items']
+        vacancies_amount = page['found']
         vacancies_salaries = []
         processed_vacancies = 0
         for vacancy in vacancies:
@@ -87,7 +87,8 @@ def predict_rub_salary_hh():
                 vacancies_salaries.append(vacancy_salary)
         salaries_amount = sum(vacancies_salaries)
         processed_vacancies = len(vacancies_salaries)
-        if processed_vacancies != 0:
+        average_salary = 0
+        if processed_vacancies:
             average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancies_amount
         about_vacancy['vacancies_processed'] = processed_vacancies
@@ -140,7 +141,8 @@ def predict_rub_salary_sj(sj_token):
             more_pages = page['more']
         salaries_amount = sum(vacancies_salaries)
         processed_vacancies = len(vacancies_salaries)
-        if processed_vacancies != 0:
+        average_salary = 0
+        if processed_vacancies:
             average_salary = salaries_amount / processed_vacancies
         about_vacancy['vacancy_amount'] = vacancy_amount
         about_vacancy['vacancies_processed'] = processed_vacancies
@@ -152,6 +154,6 @@ def predict_rub_salary_sj(sj_token):
 if __name__ == '__main__':
     load_dotenv()
     sj_token = os.environ['SJ_TOKEN']
-    print(print_table(predict_rub_salary_hh(), 'HeadHunter Moscow'))
+    print(get_table(predict_rub_salary_hh(), 'HeadHunter Moscow'))
     print()
-    print(print_table(predict_rub_salary_sj(sj_token), 'SuperJob Moscow'))
+    print(get_table(predict_rub_salary_sj(sj_token), 'SuperJob Moscow'))
